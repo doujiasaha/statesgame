@@ -29,6 +29,15 @@ while game_is_on:
     #create new dict that saves key from correct value
     matching_keys = [k for k, v in data['state'].items() if v.title() == answer_state.title()]
 
+
+    if answer_state == "Exit":
+        
+        remaining_states = pandas.DataFrame({
+            "Remaining States": [value for k, value in data['state'].items() if value not in duplicates]
+        })
+        remaining_states.to_csv("remaining_states.csv", index_label="Index")
+        
+        break
     #if dict is filled grab x and y cords from df. Let turtle write it
     if matching_keys:
         duplicates.append(data['state'][matching_keys[0]])
@@ -56,5 +65,3 @@ while game_is_on:
             answer_state = screen.textinput(title=f"{counter}/50 guessed so far. {deathcounter} life left.", prompt=f"{answer_state} has already been guessed.").title()
 
     
-
-screen.exitonclick()
